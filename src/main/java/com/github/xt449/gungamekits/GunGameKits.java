@@ -49,17 +49,17 @@ public final class GunGameKits extends JavaPlugin {
 
 	private static final Map<UUID, ItemStack[]> savedInventories = new HashMap<>();
 
-	private static final void saveInventory(final Player player) {
+	private static void saveInventory(final Player player) {
 		savedInventories.put(player.getUniqueId(), player.getInventory().getContents());
 	}
 
-	private static final void loadInventory(final Player player) {
+	private static void loadInventory(final Player player) {
 		if(savedInventories.containsKey(player.getUniqueId())) {
 			player.getInventory().setContents(savedInventories.get(player.getUniqueId()));
 		}
 	}
 
-	static final void joinPvP(final Player player) {
+	static void joinPvP(final Player player) {
 		final UUID uuid = player.getUniqueId();
 
 		if(!playerRanks.containsKey(uuid)) {// TODO
@@ -71,17 +71,17 @@ public final class GunGameKits extends JavaPlugin {
 		}
 	}
 
-	static final void leavePvP(final Player player) {
+	static void leavePvP(final Player player) {
 		loadInventory(player);
 
 		playerRanks.remove(player.getUniqueId());
 	}
 
-	static final boolean inPvP(final Player player) {
+	static boolean inPvP(final Player player) {
 		return playerRanks.containsKey(player.getUniqueId());
 	}
 
-	static final void promoteKit(final Player player) {
+	static void promoteKit(final Player player) {
 		final UUID uuid = player.getUniqueId();
 		int rank;
 		if(playerRanks.containsKey(uuid)) {
@@ -96,7 +96,7 @@ public final class GunGameKits extends JavaPlugin {
 		player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 	}
 
-	static final String serializeItemData(final ItemStack itemStack) {
+	static String serializeItemData(final ItemStack itemStack) {
 		final StringBuilder builder = new StringBuilder(itemStack.getType().name());
 		builder.append(' ').append(itemStack.getAmount());
 		for(Map.Entry<Enchantment, Integer> enchantment : itemStack.getEnchantments().entrySet()) {
@@ -110,7 +110,7 @@ public final class GunGameKits extends JavaPlugin {
 		return builder.toString();
 	}
 
-	static final ItemStack deserializeItemData(final String string) {
+	static ItemStack deserializeItemData(final String string) {
 		/*final String[] parts = string.toUpperCase().split(" ");
 		final Material material = Material.getMaterial(parts[0]);
 		if(material == null) {
